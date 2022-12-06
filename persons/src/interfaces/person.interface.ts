@@ -6,4 +6,5 @@ export interface IPerson extends Document {
   birthcountry: string;
   language: string;
   telephone: number;
+  title: any;
 }

@@ -8,7 +8,7 @@ export class DocumentsController {
   constructor(private readonly DocumentsService: DocumentsService) {}
   @MessagePattern({ cmd: 'AddDocuments' })
   public async addDocuments(userParams: IPerson): Promise<any> {
-    return await this.DocumentsService.addDocuments(userParams);
+   return await this.DocumentsService.addDocuments(userParams);
   }
   @MessagePattern({ cmd: 'get_documents' })
   public async getDocuments(Params: IPerson): Promise<any> {

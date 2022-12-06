@@ -25,21 +25,21 @@ import { GetDocumetsDto } from 'src/interfaces/dto/get-documents.dto';
 export class DocumentsController {
   constructor(
     @Inject('DOCUMENTS_SERVICE')
+    private readonly documentsServiceClient: ClientProxy,
+    @Inject('PERSONS_SERVICE')
     private readonly personsServiceClient: ClientProxy,
   ) {}
-  @Post('/add_document')
-  public async addDocuments(
-    @Body() userRequest: CreateDocumetsDto,
-  ): Promise<any> {
-    return await this.personsServiceClient
-      .send<any>({ cmd: 'AddDocuments' }, userRequest)
-      .toPromise();
-  }
   @Get('/:user_id')
   public async getDocuments(@Param() Params: GetDocumetsDto): Promise<any> {
-    console.log(Params,"hhhhhhhhhh");
-    return await this.personsServiceClient
-      .send<any>({ cmd: 'get_documents' }, Params)
+    const user = await this.personsServiceClient
+      .send<any>({ cmd: 'get_user' }, Params)
       .toPromise();
+       const documents = await this.documentsServiceClient
+         .send<any>({ cmd: 'get_documents' }, Params)
+         .toPromise();
+      let data = documents.map(element => {
+       return `<${user.language}>${element.title}<${user.language}>`;
+     });
+      return data;
   }
 }

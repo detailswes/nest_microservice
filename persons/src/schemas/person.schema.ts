@@ -13,6 +13,8 @@ export class Person {
   language: string;
   @Prop()
   telephone: number;
+  @Prop({ type: Array })
+  title: any;
 }
 
 export const PersonSchema = SchemaFactory.createForClass(Person);

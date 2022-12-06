@@ -24,11 +24,25 @@ export class PersonsController {
   constructor(
     @Inject('PERSONS_SERVICE')
     private readonly personsServiceClient: ClientProxy,
+    @Inject('DOCUMENTS_SERVICE')
+    private readonly documentsServiceClient: ClientProxy,
   ) {}
   @Post('/add')
   public async addPersons(@Body() userRequest: CreatePersonDto): Promise<any> {
-      return await this.personsServiceClient
-        .send<any>({ cmd: 'PersonCreated' }, userRequest)
-        .toPromise();
+    const createdPerson = await this.personsServiceClient
+      .send<any>({ cmd: 'PersonCreated' }, userRequest)
+      .toPromise();
+    const data = {
+      user_id: createdPerson._id,
+      title: createdPerson.title,
+    };
+    const addedDocument = await this.documentsServiceClient
+      .send<any>({ cmd: 'AddDocuments' }, data)
+      .toPromise();
+    const result = {
+      createdPerson,
+      addedDocument,
+    };
+    return result;
   }
 }

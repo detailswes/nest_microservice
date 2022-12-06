@@ -14,4 +14,8 @@ export class PersonsService {
     const PersonModel = new this.PersonModel(person);
     return await PersonModel.save();
   }
+  public async getPersons(person: any): Promise<any> {
+    const PersonModel = await this.PersonModel.findById(person.user_id);
+    return PersonModel;
+  }
 }
