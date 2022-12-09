@@ -29,17 +29,34 @@ export class DocumentsController {
     @Inject('PERSONS_SERVICE')
     private readonly personsServiceClient: ClientProxy,
   ) {}
+
+  @Post('/add')
+  public async addDocuments(
+    @Body() RequestBody: CreateDocumetsDto,
+  ): Promise<any> {
+    const addedDocument = await this.documentsServiceClient
+      .send<any>({ cmd: 'AddDocuments' }, RequestBody)
+      .toPromise();
+    return addedDocument;
+  }
+  @Get('/list/:user_id')
+  public async GetDocuments(@Param() Params: GetDocumetsDto): Promise<any> {
+    const addedDocument = await this.documentsServiceClient
+      .send<any>({ cmd: 'GetDocuments' }, Params)
+      .toPromise();
+    return addedDocument;
+  }
   @Get('/:user_id')
   public async getDocuments(@Param() Params: GetDocumetsDto): Promise<any> {
     const user = await this.personsServiceClient
       .send<any>({ cmd: 'get_user' }, Params)
       .toPromise();
-       const documents = await this.documentsServiceClient
-         .send<any>({ cmd: 'get_documents' }, Params)
-         .toPromise();
-      let data = documents.map(element => {
-       return `<${user.language}>${element.title}<${user.language}>`;
-     });
-      return data;
+    const documents = await this.documentsServiceClient
+      .send<any>({ cmd: 'get_documents' }, Params)
+      .toPromise();
+    let data = documents.map((element) => {
+      return `<${user.language}>${element.title}<${user.language}>`;
+    });
+    return data;
   }
 }

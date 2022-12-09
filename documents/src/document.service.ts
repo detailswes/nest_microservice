@@ -13,7 +13,7 @@ export class DocumentsService {
 
   public async addDocuments(person: IPerson): Promise<any> {
     let user_id = person.user_id;
-    let createddocuments = []
+    let createddocuments = [];
     for (let element of person.title) {
       const data = {
         title: element,
@@ -26,7 +26,9 @@ export class DocumentsService {
     return createddocuments;
   }
   public async getDocuments(user_id: IPerson): Promise<any> {
-   return await this.DocumentModel.find({ user_id: user_id });
-     
+    return await this.DocumentModel.find({ user_id: user_id });
+  }
+  public async GetDocuments(user_id: IPerson): Promise<any> {
+    return await this.DocumentModel.find({ user_id: user_id });
   }
 }

@@ -6,7 +6,7 @@ export class CreatePersonDto {
   name: string;
   @ApiProperty({})
   @IsNotEmpty()
-    @IsDateString()
+  @IsDateString()
   birthdate: Date;
   @ApiProperty()
   @IsNotEmpty()
@@ -16,4 +16,9 @@ export class CreatePersonDto {
   @ApiProperty()
   @IsNotEmpty()
   telephone: number;
+//   @ApiProperty({
+//     type: Array,
+//     default: ["Alice's adventures in Wonderland", 'Alice im Wunderland'],
+//   })
+//   title: any;
 }

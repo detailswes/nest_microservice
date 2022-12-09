@@ -32,16 +32,16 @@ export class PersonsController {
     const createdPerson = await this.personsServiceClient
       .send<any>({ cmd: 'PersonCreated' }, userRequest)
       .toPromise();
-    const data = {
-      user_id: createdPerson._id,
-      title: createdPerson.title,
-    };
-    const addedDocument = await this.documentsServiceClient
-      .send<any>({ cmd: 'AddDocuments' }, data)
-      .toPromise();
+    // const data = {
+    //   user_id: createdPerson._id,
+    //   title: createdPerson.title,
+    // };
+    // const addedDocument = await this.documentsServiceClient
+    //   .send<any>({ cmd: 'AddDocuments' }, data)
+    //   .toPromise();
     const result = {
       createdPerson,
-      addedDocument,
+      // addedDocument,
     };
     return result;
   }
